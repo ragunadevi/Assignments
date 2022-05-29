@@ -7,14 +7,12 @@ import org.openqa.selenium.support.ui.Select;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class CreateLead {
+public class ModifyLeadAssignment {
 
 	public static void main(String[] args) throws InterruptedException {
 		// Setup ChromeDriver
 		WebDriverManager.chromedriver().setup();
 		
-		// System.setProperty("webdriver.chrome.driver", "C:\\Users\\ADMIN\\Desktop\\chromedriver_win32 (1)\\chromedriver.exe");
-
 		// Open the browser (chrome)
 		ChromeDriver driver = new ChromeDriver();
 
@@ -57,13 +55,24 @@ public class CreateLead {
 		// select conference in source dropdown
 		WebElement stateProvince = driver.findElement(By.id("createLeadForm_generalStateProvinceGeoId"));
 		Select stateDropdown = new Select(stateProvince);
-		stateDropdown.selectByVisibleText("New York");
+		stateDropdown.selectByValue("NY");
 
 		driver.findElement(By.name("submitButton")).click();
 
 		Thread.sleep(2000);
-
+		
+		driver.findElement(By.linkText("Edit")).click();
+		
+		driver.findElement(By.id("updateLeadForm_description")).clear();
+		
+		driver.findElement(By.id("updateLeadForm_importantNote")).sendKeys("This data is modified");
+		
+		driver.findElement(By.name("submitButton")).click();
+		
+		Thread.sleep(1500);
+		
 		String pageTitle = driver.getTitle();
+		
 		System.out.println(pageTitle);
 
 		// To close the browser
