@@ -27,32 +27,33 @@ public class SnapDeal
 		driver.manage().window().maximize();
 		
 		// Go to Mens Fashion
-		WebElement mensFashion = driver.findElement(By.xpath("//span[text()=\"Men's Fashion\"]"));
 		Actions builder = new Actions(driver);
+		WebElement mensFashion = driver.findElement(By.linkText("Men's Fashion"));
 		builder.moveToElement(mensFashion).perform();
 
 		// Go to Sports Shoes
-		driver.findElement(By.xpath("(//span[contains(text()='Sports Shoes')])[1]")).click();
+		driver.findElement(By.xpath("(//span[text()='Sports Shoes'])")).click();
 		Thread.sleep(2000);
 
 		// Get the count of the Sports Shoes
-		WebElement shoesCount = driver.findElement(By.xpath("//span[contains(text(),'Items')]"));
+		WebElement shoesCount = driver.findElement(By.xpath("//span[contains(@class,'category-count')]"));
 		System.out.println("No of sports shoes: " + shoesCount.getText());
 
 		// Click Training shoes
 		driver.findElement(By.xpath("//div[text()='Training Shoes']")).click();
-
+		Thread.sleep(2000);
+		
 		// Sort by Low to High
-		driver.findElement(By.xpath("//span[text()='Sort by:']")).click();
+		driver.findElement(By.xpath("//span[contains(text(),'Sort by')]")).click();
 		Thread.sleep(2000);
 		driver.findElement(By.xpath("(//li[@class='search-li'])[1]")).click();
 
 		// Check if the items displayed are sorted correctly
 		Thread.sleep(2000);		
-		List<WebElement> sortedPrice=driver.findElements(By.xpath("//div[@class='product-desc-rating ']//div[@class='product-price-row clearfix']"));
-		for(WebElement w:sortedPrice)
+		List<WebElement> sortedPrice = driver.findElements(By.xpath("//span[@class='lfloat product-price']"));
+		for(WebElement element:sortedPrice)
 		{
-			System.out.println(w.getText());
+			System.out.println(element.getText());
 		}
 
 		// Select the price range (900-1200)
@@ -66,12 +67,13 @@ public class SnapDeal
 
 		// Filter with color Navy 
 		driver.findElement(By.xpath("(//button[text()='View More '])[1]")).click();
+		
 		WebElement color = driver.findElement(By.xpath("//a[text()=' Navy']"));
-		// Verify the all applied filters 
 		System.out.println("The navy color filter is enabled: " + color.isSelected());
-		Thread.sleep(2000);
-		WebElement priceFilter = driver.findElement(By.xpath("(//a[@class='clear-filter-pill'])[1]"));
-		String price = priceFilter.getText();
+		
+		// Verify the all applied filters 
+		WebElement priceTag = driver.findElement(By.xpath("(//a[@class='clear-filter-pill'])[1]"));
+		String price = priceTag.getText();
 		System.out.println("The product price is from: " + price);
 		Thread.sleep(2000);
 
